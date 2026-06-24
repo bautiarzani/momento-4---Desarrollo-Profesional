@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blest Agency — Pitch Deck</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FFFFFF;
+    --bg-alt:#F7F6F2;
+    --text:#1A1A18;
+    --text-soft:#8A8A84;
+    --gold:#B8965A;
+    --card:#E8E4DC;
+    --sage:#C5C9B8;
+    --sage-dark:#8A9B7A;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    font-weight:400;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+
+  section{
+    min-height:100vh;
+    width:100%;
+    position:relative;
+    padding:120px 8vw 80px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+  }
+
+  .bg-white{background:var(--bg-alt);}
+  .bg-cream{background:var(--bg);}
+
+  h1,h2,h3{font-family:'Cormorant Garamond',serif;font-weight:400;color:var(--text);}
+
+  .label{
+    font-family:'Inter',sans-serif;
+    font-size:12px;
+    font-weight:500;
+    letter-spacing:0.25em;
+    text-transform:uppercase;
+    color:var(--text-soft);
+    margin-bottom:24px;
+  }
+
+  .title-xl{font-size:clamp(36px,5vw,64px);font-weight:400;margin-bottom:32px;line-height:1.1;}
+  .title-lg{font-size:clamp(28px,4vw,44px);font-weight:400;margin-bottom:24px;}
+
+  .italic-serif{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--text-soft);}
+
+  .max-content{max-width:1200px;margin:0 auto;width:100%;}
+
+  a{color:inherit;text-decoration:none;}
+
+  /* fade-up animation */
+  .fade-up{opacity:0;transform:translateY(40px);transition:opacity 0.9s ease, transform 0.9s ease;}
+  .fade-up.visible{opacity:1;transform:translateY(0);}
+  .fade-up.delay-1{transition-delay:0.1s;}
+  .fade-up.delay-2{transition-delay:0.2s;}
+  .fade-up.delay-3{transition-delay:0.3s;}
+  .fade-up.delay-4{transition-delay:0.4s;}
+
+  /* ===== NAV ===== */
+  nav{
+    position:fixed;top:0;left:0;width:100%;
+    z-index:1000;
+    background:rgba(255,255,255,0.85);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(138,138,132,0.18);
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px 8vw;
+  }
+  .nav-logo{height:24px;width:auto;display:block;}
+
+  .nav-toggle{
+    display:flex;flex-direction:column;justify-content:center;gap:5px;
+    width:26px;height:20px;background:none;border:none;padding:0;cursor:pointer;
+  }
+  .nav-toggle span{
+    display:block;width:100%;height:1px;background:var(--text);
+    transition:transform 0.3s ease, opacity 0.3s ease;
+  }
+  .nav-toggle.open span:nth-child(1){transform:translateY(6px) rotate(45deg);}
+  .nav-toggle.open span:nth-child(2){opacity:0;}
+  .nav-toggle.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg);}
+
+  .nav-overlay{
+    position:fixed;inset:0;background:rgba(26,26,24,0.12);
+    opacity:0;pointer-events:none;transition:opacity 0.35s ease;
+    z-index:940;
+  }
+  .nav-overlay.open{opacity:1;pointer-events:auto;}
+
+  .nav-menu{
+    position:fixed;top:0;right:0;height:100vh;
+    width:min(360px,88vw);
+    background:rgba(255,255,255,0.97);
+    backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+    border-left:1px solid rgba(138,138,132,0.18);
+    padding:110px 40px 40px;
+    display:flex;flex-direction:column;gap:2px;
+    overflow-y:auto;
+    transform:translateX(100%);
+    transition:transform 0.4s ease;
+    z-index:950;
+  }
+  .nav-menu.open{transform:translateX(0);}
+  .nav-menu a{
+    display:flex;align-items:baseline;gap:18px;
+    padding:16px 2px;border-bottom:1px solid rgba(138,138,132,0.15);
+    transition:padding-left 0.3s ease;
+  }
+  .nav-menu a:hover{padding-left:8px;}
+  .nav-menu-num{font-size:11px;letter-spacing:0.1em;color:var(--gold);font-weight:600;min-width:22px;}
+  .nav-menu-title{font-family:'Cormorant Garamond',serif;font-size:19px;color:var(--text);}
+  .nav-menu a.active .nav-menu-num,.nav-menu a.active .nav-menu-title{color:var(--gold);}
+
+  /* ===== DOT NAV (live presentation) ===== */
+  .dot-nav{
+    position:fixed;right:26px;top:50%;transform:translateY(-50%);
+    z-index:900;display:flex;flex-direction:column;gap:13px;
+  }
+  .dot-nav button{
+    width:7px;height:7px;border-radius:50%;
+    border:1px solid var(--text-soft);background:transparent;
+    padding:0;cursor:pointer;transition:transform 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+  }
+  .dot-nav button:hover{border-color:var(--gold);}
+  .dot-nav button.active{background:var(--gold);border-color:var(--gold);transform:scale(1.4);}
+  @media (max-width:900px){.dot-nav{display:none;}}
+
+  /* ===== KEYBOARD HINT (cover) ===== */
+  .kbd-hint{
+    position:absolute;bottom:36px;left:50%;transform:translateX(-50%);
+    display:flex;align-items:center;gap:8px;
+    font-size:11px;letter-spacing:0.1em;color:var(--text-soft);text-transform:uppercase;
+    opacity:0;animation:hintIn 1s ease 2.8s forwards, hintOut 1s ease 8s forwards;
+  }
+  .kbd-hint svg{width:13px;height:13px;stroke:var(--text-soft);fill:none;stroke-width:1.5;animation:hintBounce 1.8s ease-in-out infinite;}
+  @keyframes hintIn{to{opacity:1;}}
+  @keyframes hintOut{to{opacity:0;}}
+  @keyframes hintBounce{0%,100%{transform:translateY(0);}50%{transform:translateY(4px);}}
+
+  /* ===== Interactive hover lift (live presentation) ===== */
+  .seg-card,.approach-block,.funnel-card,
+  .pillar,.timeline-step,.stat{
+    transition:transform 0.35s ease, box-shadow 0.35s ease, background 0.3s ease;
+  }
+  .seg-card:hover,.approach-block:hover,.funnel-card:hover{
+    transform:translateY(-5px);
+    box-shadow:0 16px 32px rgba(26,26,24,0.07);
+  }
+  .pillar:hover svg{stroke:var(--text);}
+  .timeline-step:hover svg{stroke:var(--text);transform:translateY(-2px);}
+
+  /* ===== PORTADA ===== */
+  #portada{
+    align-items:center;text-align:center;
+    background:var(--bg);
+  }
+  .cover-pretitle{
+    font-family:'Inter',sans-serif;font-size:12px;letter-spacing:0.3em;
+    text-transform:uppercase;color:var(--text-soft);margin-bottom:48px;
+  }
+  .cover-logo{
+    height:clamp(80px,16vw,200px);
+    width:auto;
+    margin-bottom:32px;
+  }
+  .cover-tagline{
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:clamp(18px,2.4vw,32px);color:var(--text-soft);
+    margin-bottom:64px;max-width:700px;
+  }
+  .cover-tagline span{display:block;}
+  .cover-footer{
+    font-size:13px;color:var(--text-soft);letter-spacing:0.04em;
+  }
+  .cover-footer span{display:block;margin-top:6px;}
+
+  /* ===== 01 IDEA ===== */
+  .split{
+    display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;
+  }
+  @media (max-width:900px){.split{grid-template-columns:1fr;gap:48px;}}
+
+  .frame-media{
+    width:100%;aspect-ratio:4/5;
+    background-color:var(--sage);
+    background-size:cover;background-position:center;
+    position:relative;
+  }
+  figure.frame{margin:0;}
+  figure.frame figcaption{
+    margin-top:16px;font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:14px;color:var(--text-soft);text-align:center;letter-spacing:0.01em;
+  }
+
+  /* imagen a sangre: ocupa toda la altura de la sección, sin recorte fijo */
+  #idea .split{align-items:stretch;}
+  figure.frame-full{height:100%;}
+  figure.frame-full .frame-media{height:100%;aspect-ratio:auto;}
+  @media (max-width:900px){
+    figure.frame-full .frame-media{aspect-ratio:4/5;height:auto;}
+  }
+
+  /* moodboard horizontal */
+  figure.frame-horizontal{margin-top:40px;}
+  figure.frame-horizontal .frame-media{aspect-ratio:16/7;width:100%;}
+  @media (max-width:700px){
+    figure.frame-horizontal .frame-media{aspect-ratio:4/3;}
+  }
+
+  /* tabla/captura: se muestra completa, sin recorte, en su proporción real */
+  figure.frame-table{margin-top:40px;width:100%;}
+  .frame-table-img{width:100%;height:auto;display:block;border:1px solid rgba(26,26,24,0.08);}
+
+  #numeros{min-height:auto;padding:100px 8vw 80px;}
+
+  .card-sage{
+    background:var(--sage);
+    padding:28px 32px;border-radius:2px;
+    font-family:'Cormorant Garamond',serif;font-size:19px;font-style:italic;
+    color:var(--text);margin:28px 0;
+    line-height:1.5;
+  }
+
+  .pillars{display:flex;gap:36px;margin-top:40px;flex-wrap:wrap;}
+  .pillar{flex:1;min-width:160px;}
+  .pillar svg{width:32px;height:32px;stroke:var(--gold);fill:none;stroke-width:1.4;margin-bottom:14px;}
+  .pillar h4{font-family:'Inter',sans-serif;font-size:13px;letter-spacing:0.1em;font-weight:600;margin-bottom:8px;text-transform:uppercase;}
+  .pillar p{font-size:14px;color:var(--text-soft);}
+
+  /* ===== 02 STATS ===== */
+  .stats-row{
+    display:grid;grid-template-columns:1fr 1fr 1fr;
+    margin:48px 0 64px;
+  }
+  .stat{
+    text-align:center;padding:0 32px;border-right:1px solid rgba(138,138,132,0.25);
+  }
+  .stat:last-child{border-right:none;}
+  .stat-number{font-family:'Cormorant Garamond',serif;font-size:clamp(48px,8vw,90px);color:var(--text);line-height:1;margin-bottom:16px;}
+  .stat-text{font-size:13px;color:var(--text-soft);max-width:260px;margin:0 auto;}
+  .stat-source{display:block;margin-top:10px;font-size:11px;letter-spacing:0.06em;color:var(--gold);}
+  @media (max-width:768px){
+    .stats-row{grid-template-columns:1fr;gap:48px;}
+    .stat{border-right:none;border-bottom:1px solid rgba(138,138,132,0.25);padding-bottom:32px;}
+    .stat:last-child{border-bottom:none;}
+  }
+
+  .driver-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:40px;}
+  .driver-card{padding-top:20px;border-top:1px solid rgba(138,138,132,0.3);}
+  .driver-num{font-family:'Cormorant Garamond',serif;font-size:30px;color:var(--gold);display:block;margin-bottom:10px;}
+  .driver-card p{font-size:14px;color:var(--text);line-height:1.5;}
+  @media (max-width:768px){.driver-cards{grid-template-columns:1fr;gap:20px;}}
+
+  /* ===== 03 TABLA COMPARATIVA ===== */
+  .compare-table{width:100%;border-collapse:collapse;margin:32px 0;font-size:14px;}
+  .compare-table th, .compare-table td{
+    padding:16px 18px;text-align:left;border-bottom:1px solid rgba(138,138,132,0.25);
+  }
+  .compare-table th{font-weight:500;font-size:12px;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-soft);}
+  .compare-table .col-blest{background:rgba(197,201,184,0.35);border-left:1px solid var(--gold);border-right:1px solid var(--gold);font-weight:500;}
+  .compare-table th.col-blest{border-top:1px solid var(--gold);}
+  .compare-table td,.compare-table th{transition:opacity 0.3s ease;}
+  .compare-table th.competitor-col{cursor:pointer;transition:color 0.3s ease;}
+  .compare-table th.competitor-col:hover{color:var(--gold);}
+  .compare-table.spotlight-1 td:nth-child(3),.compare-table.spotlight-1 th:nth-child(3){opacity:0.3;}
+  .compare-table.spotlight-2 td:nth-child(2),.compare-table.spotlight-2 th:nth-child(2){opacity:0.3;}
+  .compare-hint{font-size:13px;color:var(--text-soft);margin-bottom:8px;}
+  .table-wrap{overflow-x:auto;}
+
+  .quote-block{
+    margin-top:40px;font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:clamp(20px,2.6vw,30px);color:var(--text);max-width:760px;
+    border-left:2px solid var(--gold);padding-left:24px;
+  }
+
+  /* ===== 04 EMPATIA ===== */
+  .seg-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin:32px 0 56px;}
+  .seg-card{background:var(--card);padding:28px;border-radius:2px;}
+  .seg-card .seg-label{font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;font-weight:500;}
+  .seg-card p{font-size:14px;color:var(--text);}
+  @media (max-width:900px){.seg-cards{grid-template-columns:1fr;}}
+
+  .empathy-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;max-width:900px;margin:0 auto;}
+  .empathy-cell{
+    padding:32px;position:relative;cursor:pointer;
+    transition:transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .empathy-cell:hover{transform:translateY(-3px);box-shadow:0 14px 28px rgba(26,26,24,0.07);}
+  .empathy-cell:nth-child(1){background:var(--sage);}
+  .empathy-cell:nth-child(2){background:var(--sage-dark);}
+  .empathy-cell:nth-child(3){background:var(--sage-dark);}
+  .empathy-cell:nth-child(4){background:var(--sage);}
+  .empathy-icon{width:26px;height:26px;stroke:var(--text);fill:none;stroke-width:1.4;opacity:0.7;margin-bottom:12px;display:block;}
+  .empathy-cell h4{font-size:12px;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:12px;font-weight:600;}
+  .empathy-cell p{font-size:14px;margin:0;}
+  .empathy-toggle{
+    position:absolute;top:20px;right:24px;font-size:18px;color:var(--text-soft);
+    transition:transform 0.3s ease;
+  }
+  .empathy-cell.active .empathy-toggle{transform:rotate(45deg);}
+  .empathy-more{
+    max-height:0;opacity:0;overflow:hidden;font-size:13px;line-height:1.5;
+    transition:max-height 0.4s ease, opacity 0.3s ease, margin-top 0.3s ease;
+  }
+  .empathy-cell.active .empathy-more{max-height:160px;opacity:1;margin-top:14px;}
+  @media (max-width:768px){.empathy-grid{grid-template-columns:1fr;}}
+
+  /* ===== 05 ADN ===== */
+  .value-prop-text{
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:clamp(20px,2.4vw,28px);line-height:1.65;
+    color:var(--text);text-align:justify;hyphens:auto;
+    margin-top:8px;
+  }
+
+  /* ===== 06 IDENTIGRAMA ===== */
+  .split-identigrama{display:grid;grid-template-columns:0.65fr 1.35fr;gap:40px;align-items:center;}
+  @media (max-width:900px){.split-identigrama{grid-template-columns:1fr;}}
+  .identigrama-lead{
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:18px;color:var(--text-soft);line-height:1.5;margin:8px 0 28px;
+  }
+  .identigrama-detail{
+    background:var(--card);padding:26px 28px;border-radius:2px;min-height:130px;
+  }
+  .identigrama-detail-tag{
+    font-size:11px;letter-spacing:0.1em;text-transform:uppercase;
+    color:var(--gold);font-weight:600;display:block;margin-bottom:10px;
+  }
+  .identigrama-detail p{font-size:15px;line-height:1.6;color:var(--text);margin:0;}
+  .radar-wrap{display:flex;justify-content:flex-end;}
+  @media (max-width:900px){.radar-wrap{justify-content:center;margin-top:8px;}}
+  .radar-axis{cursor:pointer;}
+  .radar-axis:hover .radar-point{r:6;}
+
+  /* ===== 07 PROCESO ===== */
+  .timeline{display:flex;align-items:flex-start;margin:48px 0;gap:0;flex-wrap:wrap;}
+  .timeline-step{flex:1;min-width:140px;text-align:center;padding:0 6px;}
+  .timeline-step svg{width:30px;height:30px;stroke:var(--gold);fill:none;stroke-width:1.4;margin-bottom:14px;transition:transform 0.3s ease, stroke 0.3s ease;}
+  .timeline-step h4{font-size:13px;font-weight:600;letter-spacing:0.04em;margin-bottom:6px;}
+  .timeline-step p{font-size:12px;color:var(--text-soft);}
+  .timeline-connector{flex:0 0 30px;display:flex;justify-content:center;margin-top:14px;}
+  .timeline-connector svg{width:28px;height:10px;stroke:var(--text-soft);fill:none;stroke-width:1.2;}
+  @media (max-width:900px){.timeline{flex-direction:column;}.timeline-connector{display:none;}}
+
+  .hr-thin{border:none;border-top:1px solid rgba(138,138,132,0.25);margin:40px 0;}
+
+  .resource-label{font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-soft);margin-bottom:16px;}
+  .resource-tags{display:flex;flex-wrap:wrap;gap:10px;}
+  .resource-tag{
+    font-size:12px;letter-spacing:0.03em;color:var(--text);
+    border:1px solid rgba(138,138,132,0.35);border-radius:20px;
+    padding:8px 18px;background:var(--bg-alt);
+  }
+
+  .team-carousel-wrap{
+    margin-top:24px;overflow:hidden;position:relative;
+  }
+  .team-carousel-wrap::before,.team-carousel-wrap::after{
+    content:"";position:absolute;top:0;bottom:0;width:70px;z-index:2;pointer-events:none;
+  }
+  .team-carousel-wrap::before{left:0;background:linear-gradient(to right, var(--bg) 0%, rgba(255,255,255,0) 100%);}
+  .team-carousel-wrap::after{right:0;background:linear-gradient(to left, var(--bg) 0%, rgba(255,255,255,0) 100%);}
+  .team-carousel{
+    display:flex;gap:20px;width:max-content;
+    animation:teamScroll 26s linear infinite;
+  }
+  .team-carousel:hover{animation-play-state:paused;}
+  @keyframes teamScroll{
+    from{transform:translateX(0);}
+    to{transform:translateX(-50%);}
+  }
+  .team-card-c{
+    flex:0 0 210px;background:var(--card);border-radius:6px;
+    padding:30px 20px;text-align:center;
+    display:flex;flex-direction:column;align-items:center;
+  }
+  .team-avatar-c{
+    width:72px;height:72px;border-radius:50%;flex-shrink:0;
+    background-color:var(--sage);background-size:cover;background-position:center;
+    border:1px solid rgba(26,26,24,0.1);margin-bottom:16px;
+  }
+  .team-role-c{font-size:13px;font-weight:600;letter-spacing:0.03em;margin-bottom:6px;}
+  .team-desc-c{font-size:12px;color:var(--text-soft);line-height:1.5;}
+
+  /* ===== 08 FUNNEL ===== */
+  .funnel-shape{display:flex;flex-direction:column;align-items:center;gap:2px;margin:36px 0 56px;}
+  .funnel-stage{
+    width:var(--w);max-width:680px;padding:24px 32px;border-radius:2px;text-align:center;
+    transition:transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .funnel-stage:hover{transform:translateY(-3px);box-shadow:0 14px 28px rgba(26,26,24,0.07);}
+  .funnel-stage.stage-1{background:var(--card);}
+  .funnel-stage.stage-2{background:var(--sage);}
+  .funnel-stage.stage-3{background:var(--sage-dark);}
+  .funnel-stage h4{font-family:'Inter',sans-serif;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px;font-weight:600;}
+  .funnel-stage p{font-size:14px;margin:0;}
+  .funnel-arrow{width:16px;height:10px;stroke:var(--text-soft);fill:none;stroke-width:1.4;margin:4px 0;}
+  @media (max-width:600px){.funnel-stage{width:100% !important;}}
+
+  .approach-blocks{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:40px;}
+  .approach-block{padding:24px;border-top:2px solid var(--gold);}
+  .approach-block h4{font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;font-weight:600;}
+  .approach-block p{font-size:14px;}
+  @media (max-width:900px){.approach-blocks{grid-template-columns:1fr;}}
+
+  /* ===== 09 RIESGO ===== */
+  .risk-layout{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;margin-top:40px;}
+  @media (max-width:900px){.risk-layout{grid-template-columns:1fr;gap:40px;}}
+
+  .risk-matrix-wrap{max-width:440px;margin:0 auto;width:100%;}
+  .risk-axis-x{
+    text-align:center;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;
+    color:var(--text-soft);margin-bottom:12px;
+  }
+  .risk-matrix-row{display:flex;gap:14px;}
+  .risk-axis-y{
+    writing-mode:vertical-rl;transform:rotate(180deg);
+    font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-soft);
+    flex:0 0 16px;display:flex;align-items:center;justify-content:center;
+  }
+  .risk-quadrants{
+    flex:1;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;
+    gap:3px;aspect-ratio:1/1;
+  }
+  .risk-cell{
+    background:var(--card);display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:8px;text-align:center;padding:16px;
+    transition:transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .risk-cell:hover{transform:translateY(-3px);box-shadow:0 10px 22px rgba(26,26,24,0.06);}
+  .risk-cell.major{background:var(--sage-dark);}
+  .risk-quad-tag{font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold);font-weight:600;}
+  .risk-cell p{font-family:'Cormorant Garamond',serif;font-size:16px;margin:0;}
+  .risk-pin{
+    width:24px;height:24px;border-radius:50%;
+    background:var(--gold);color:#fff;font-size:11px;font-weight:600;
+    display:flex;align-items:center;justify-content:center;
+  }
+
+  .contingency-stack{display:flex;flex-direction:column;gap:20px;height:100%;}
+  .contingency-card{
+    flex:1;display:flex;gap:18px;align-items:flex-start;
+    background:var(--bg-alt);border:1px solid rgba(138,138,132,0.2);
+    padding:26px 28px;border-radius:2px;
+    transition:transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .contingency-card:hover{transform:translateY(-3px);box-shadow:0 14px 28px rgba(26,26,24,0.06);}
+  .contingency-num{
+    flex:0 0 26px;width:26px;height:26px;border-radius:50%;background:var(--gold);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;
+  }
+  .contingency-card h4{font-family:'Cormorant Garamond',serif;font-size:20px;margin-bottom:8px;}
+  .contingency-card .meta{font-size:12px;color:var(--text-soft);margin-bottom:10px;}
+  .contingency-card p{font-size:13px;line-height:1.5;}
+
+  /* ===== CIERRE ===== */
+  #cierre{justify-content:center;}
+  .closing-statement-block{margin-bottom:60px;}
+  .closing-statement-line{display:flex;align-items:baseline;gap:20px;flex-wrap:wrap;}
+  .closing-logo{height:clamp(48px,8vw,84px);width:auto;}
+  .closing-statement{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,7vw,64px);line-height:1.1;}
+  .closing-statement-italic{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(22px,4vw,36px);color:var(--text-soft);margin-top:14px;}
+  .closing-sep{width:80px;border:none;border-top:1px solid var(--text-soft);margin:40px 0;}
+  .closing-bottom{display:flex;justify-content:space-between;flex-wrap:wrap;gap:24px;}
+  .closing-bottom-left{font-size:13px;color:var(--text-soft);letter-spacing:0.04em;}
+  .closing-bottom-right{text-align:right;}
+  .closing-bottom-right .thanks{font-family:'Dancing Script',cursive;font-size:36px;color:var(--text);}
+  .closing-bottom-right .questions{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px;color:var(--text-soft);}
+
+  ::selection{background:var(--gold);color:#fff;}
+
+  table{font-family:'Inter',sans-serif;}
+</style>
+</head>
+<body>
+
+<!-- ===================== NAV ===================== -->
+<nav>
+  <img class="nav-logo" src="images/logo-blest.png" alt="blest">
+  <button class="nav-toggle" id="navToggle" aria-label="Abrir índice" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="nav-overlay" id="navOverlay"></div>
+<div class="nav-menu" id="navMenu">
+  <a href="#idea"><span class="nav-menu-num">01</span><span class="nav-menu-title">Idea Emprendedora</span></a>
+  <a href="#contexto"><span class="nav-menu-num">02</span><span class="nav-menu-title">Contexto &amp; Tendencias</span></a>
+  <a href="#mercado"><span class="nav-menu-num">03</span><span class="nav-menu-title">Mercado &amp; Competencia</span></a>
+  <a href="#publico"><span class="nav-menu-num">04</span><span class="nav-menu-title">Público Objetivo</span></a>
+  <a href="#adn"><span class="nav-menu-num">05</span><span class="nav-menu-title">ADN &amp; Posicionamiento</span></a>
+  <a href="#identigrama"><span class="nav-menu-num">06</span><span class="nav-menu-title">Factores Críticos de Éxito</span></a>
+  <a href="#proceso"><span class="nav-menu-num">07</span><span class="nav-menu-title">Actores &amp; Recursos</span></a>
+  <a href="#comunicacion"><span class="nav-menu-num">08</span><span class="nav-menu-title">Estrategia de Comunicación</span></a>
+  <a href="#riesgo"><span class="nav-menu-num">09</span><span class="nav-menu-title">Análisis de Riesgo</span></a>
+  <a href="#numeros"><span class="nav-menu-num">10</span><span class="nav-menu-title">Modelo Numérico</span></a>
+</div>
+
+<!-- ===================== DOT NAV (navegación para presentación en vivo) ===================== -->
+<div class="dot-nav" id="dotNav"></div>
+
+<!-- ===================== PORTADA ===================== -->
+<section id="portada">
+  <div class="cover-pretitle" id="cover-pre">DESARROLLO PROFESIONAL • CÁTEDRA ONOFRE • UP</div>
+  <img class="cover-logo" id="cover-logo" src="images/logo-blest.png" alt="blest">
+  <div class="cover-tagline" id="cover-tagline">
+    <span>"Your mission is already meaningful,</span>
+    <span>we make sure the world can find it."</span>
+  </div>
+  <div class="cover-footer" id="cover-footer">
+    Juan Bautista Arzani • Lic. en Diseño, Tecnología y Negocios
+    <span>Presentación M4 — 2026</span>
+  </div>
+  <div class="kbd-hint">
+    <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+    Usá las flechas del teclado para navegar
+  </div>
+</section>
+
+<!-- ===================== 01 — IDEA EMPRENDEDORA ===================== -->
+<section id="idea" class="bg-cream">
+  <div class="max-content split">
+    <div>
+      <div class="label fade-up">01 — IDEA EMPRENDEDORA</div>
+      <h2 class="title-xl fade-up">Agencia de Media Digital &amp; Accesibilidad</h2>
+
+      <div class="card-sage fade-up">
+        Especialistas en organizaciones católicas, ministerios y ONGs que buscan una presencia digital clara, profesional e inclusiva.
+      </div>
+
+      <div class="pillars">
+        <div class="pillar fade-up delay-1">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+          <h4>Claridad</h4>
+          <p>Experiencias digitales coherentes y profesionales.</p>
+        </div>
+        <div class="pillar fade-up delay-2">
+          <svg viewBox="0 0 24 24"><path d="M2 12h20M12 2v20"/><circle cx="12" cy="12" r="9"/></svg>
+          <h4>Inclusión</h4>
+          <p>Accesibilidad WCAG como eje central.</p>
+        </div>
+        <div class="pillar fade-up delay-3">
+          <svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-7-10a5 5 0 0110-1 5 5 0 0110 1c0 5.5-7 10-7 10z"/></svg>
+          <h4>Propósito</h4>
+          <p>Diseño al servicio de la misión institucional.</p>
+        </div>
+      </div>
+    </div>
+    <figure class="frame frame-full fade-up delay-2">
+      <div class="frame-media" style="background-image:url('images/01-idea.jpg');"></div>
+    </figure>
+  </div>
+</section>
+
+<!-- ===================== 02 — CONTEXTO & TENDENCIAS ===================== -->
+<section id="contexto" class="bg-white">
+  <div class="max-content">
+    <div class="label fade-up">02 — CONTEXTO &amp; TENDENCIAS</div>
+    <h2 class="title-xl fade-up">¿Por qué ahora?</h2>
+
+    <div class="stats-row">
+      <div class="stat fade-up">
+        <div class="stat-number">1/6</div>
+        <div class="stat-text">personas en el mundo vive con discapacidad. La accesibilidad es una exigencia de inclusión.
+          <span class="stat-source">OMS, 2023</span>
+        </div>
+      </div>
+      <div class="stat fade-up delay-1">
+        <div class="stat-number">94%</div>
+        <div class="stat-text">de las primeras impresiones dependen del diseño y la confianza visual del sitio.
+          <span class="stat-source">Forbes, 2024</span>
+        </div>
+      </div>
+      <div class="stat fade-up delay-2">
+        <div class="stat-number">96%</div>
+        <div class="stat-text">de los sitios web tienen errores críticos de accesibilidad WCAG. Oportunidad de nicho.
+          <span class="stat-source">WebAIM, 2025</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="driver-cards">
+      <div class="driver-card fade-up">
+        <span class="driver-num">01</span>
+        <p>Mayor conciencia sobre inclusión y accesibilidad digital</p>
+      </div>
+      <div class="driver-card fade-up delay-1">
+        <span class="driver-num">02</span>
+        <p>Saturación de agencias generalistas</p>
+      </div>
+      <div class="driver-card fade-up delay-2">
+        <span class="driver-num">03</span>
+        <p>Crecimiento de organizaciones con propósito social</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 03 — MERCADO & COMPETENCIA ===================== -->
+<section id="mercado" class="bg-cream">
+  <div class="max-content">
+    <div class="label fade-up">03 — MERCADO &amp; COMPETENCIA</div>
+    <h2 class="title-xl fade-up" style="margin-bottom:40px;">Posicionamiento Especialista</h2>
+
+    <p class="compare-hint fade-up">Tocá el nombre de un competidor para comparar directo contra Blest.</p>
+    <div class="table-wrap fade-up">
+      <table class="compare-table" id="compareTable">
+        <thead>
+          <tr>
+            <th>Criterio</th>
+            <th class="competitor-col" data-col="1">MANDARiNA</th>
+            <th class="competitor-col" data-col="2">Weeik</th>
+            <th class="col-blest">Blest Agency ★</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Foco del segmento</td>
+            <td>Corporativo / General</td>
+            <td>Creativo / Comercial</td>
+            <td class="col-blest">Especialista (Fe)</td>
+          </tr>
+          <tr>
+            <td>Accesibilidad WCAG</td>
+            <td>No es eje central</td>
+            <td>Estética primero</td>
+            <td class="col-blest">Atributo distintivo</td>
+          </tr>
+          <tr>
+            <td>Posicionamiento</td>
+            <td>Generalista</td>
+            <td>Creativo</td>
+            <td class="col-blest">Especialista ★</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="quote-block fade-up">
+      "El diferencial de Blest no está en los servicios que ofrece, sino en la manera en que los desarrolla."
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 04 — PÚBLICO OBJETIVO & SEGMENTACIÓN ===================== -->
+<section id="publico" class="bg-white">
+  <div class="max-content">
+    <div class="label fade-up">04 — PÚBLICO OBJETIVO</div>
+    <h2 class="title-xl fade-up">Entendiendo al Cliente</h2>
+
+    <div class="seg-cards">
+      <div class="seg-card fade-up">
+        <div class="seg-label">Geográfica</div>
+        <p>Miami, FL como sede. Operación remota global. Foco en hispanohablantes en EE.UU. y Latinoamérica.</p>
+      </div>
+      <div class="seg-card fade-up delay-1">
+        <div class="seg-label">Psicográfica</div>
+        <p>Organizaciones con valores católicos que entienden la presencia digital como extensión de su misión pastoral.</p>
+      </div>
+      <div class="seg-card fade-up delay-2">
+        <div class="seg-label">Por Ventajas Buscadas</div>
+        <p>Solución estratégica, funcional y accesible. Calidad, personalización y coherencia institucional.</p>
+      </div>
+    </div>
+
+    <h3 class="title-lg fade-up" style="text-align:center;margin-top:24px;">Mapa de Empatía</h3>
+    <p class="compare-hint fade-up" style="text-align:center;">Tocá cada cuadrante para ver más detalle.</p>
+    <div class="empathy-grid fade-up" id="empathyGrid">
+      <div class="empathy-cell">
+        <span class="empathy-toggle">+</span>
+        <svg class="empathy-icon" viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+        <h4>Qué ve</h4>
+        <p>Agencias digitales con propuestas genéricas y poca comprensión institucional.</p>
+        <div class="empathy-more">Sitios institucionales desactualizados, sin información clara sobre cómo empezar a trabajar juntos.</div>
+      </div>
+      <div class="empathy-cell">
+        <span class="empathy-toggle">+</span>
+        <svg class="empathy-icon" viewBox="0 0 24 24"><path d="M12 21s-7-4.5-7-10a5 5 0 0110-1 5 5 0 0110 1c0 5.5-7 10-7 10z"/></svg>
+        <h4>Qué piensa y siente</h4>
+        <p>Quiere comunicar profesionalismo y generar confianza. Busca que su organización sea comprendida y valorada.</p>
+        <div class="empathy-more">Teme que una mala presencia digital opaque años de trabajo pastoral y comunitario.</div>
+      </div>
+      <div class="empathy-cell">
+        <span class="empathy-toggle">+</span>
+        <svg class="empathy-icon" viewBox="0 0 24 24"><path d="M3 10v4M7 7v10M11 4v16M15 7v10M19 10v4"/></svg>
+        <h4>Qué escucha</h4>
+        <p>Que la presencia digital es indispensable y que la accesibilidad comienza a ser una necesidad real.</p>
+        <div class="empathy-more">Comentarios de otras organizaciones que ya migraron su presencia digital y notaron el impacto en la confianza de su comunidad.</div>
+      </div>
+      <div class="empathy-cell">
+        <span class="empathy-toggle">+</span>
+        <svg class="empathy-icon" viewBox="0 0 24 24"><path d="M21 11.5a8.5 8.5 0 01-12.5 7.5L3 20l1-5.5A8.5 8.5 0 1121 11.5z"/></svg>
+        <h4>Qué dice y hace</h4>
+        <p>Busca agencias alineadas con sus valores y prioriza relaciones de trabajo más cercanas y personalizadas.</p>
+        <div class="empathy-more">Pide referencias antes de contratar y prioriza una relación de largo plazo sobre un proyecto puntual.</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===================== 05 — ADN & POSICIONAMIENTO ===================== -->
+<section id="adn" class="bg-cream">
+  <div class="max-content">
+    <div class="label fade-up">05 — ADN &amp; POSICIONAMIENTO</div>
+    <h2 class="title-xl fade-up">Propuesta de Valor</h2>
+
+    <p class="value-prop-text fade-up">
+      "Para organizaciones, instituciones y marcas con propósito que buscan construir una presencia digital clara y profesional, Blest Agency desarrolla soluciones estratégicas y accesibles para comunicar de forma coherente su identidad."
+    </p>
+
+    <figure class="frame frame-horizontal fade-up delay-2">
+      <div class="frame-media" style="background-image:url('images/05-moodboard.jpg');"></div>
+    </figure>
+  </div>
+</section>
+
+<!-- ===================== 06 — IDENTIGRAMA ===================== -->
+<section id="identigrama" class="bg-white">
+  <div class="max-content split-identigrama">
+    <div class="identigrama-intro">
+      <div class="label fade-up">06 — FACTORES CRÍTICOS DE ÉXITO</div>
+      <h2 class="title-xl fade-up">Identigrama de Blest</h2>
+      <p class="identigrama-lead fade-up">Los cinco factores que definen la solidez del modelo. Tocá cada eje del gráfico para ver el detalle.</p>
+      <div class="identigrama-detail fade-up" id="identigramaDetail"></div>
+    </div>
+    <div class="radar-wrap fade-up delay-1">
+      <svg width="540" height="540" viewBox="0 0 540 540" id="radar-svg" style="max-width:100%;height:auto;"></svg>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 07 — ACTORES, RECURSOS & PROCESO ===================== -->
+<section id="proceso" class="bg-cream">
+  <div class="max-content">
+    <div class="label fade-up">07 — ACTORES &amp; RECURSOS</div>
+    <h2 class="title-xl fade-up">Proceso &amp; Metodología</h2>
+
+    <div class="timeline">
+      <div class="timeline-step fade-up">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 12l1.5 1.5L15 9"/></svg>
+        <h4>Discovery Session</h4>
+        <p>Escucha y diagnóstico</p>
+      </div>
+      <div class="timeline-connector"><svg viewBox="0 0 28 10"><line x1="0" y1="5" x2="21" y2="5"/><path d="M17 1l5 4-5 4"/></svg></div>
+      <div class="timeline-step fade-up delay-1">
+        <svg viewBox="0 0 24 24"><path d="M4 19h16M4 15l4-4 4 4 6-8"/></svg>
+        <h4>Estrategia &amp; Tono</h4>
+        <p>Estructura, mensajes, accesibilidad</p>
+      </div>
+      <div class="timeline-connector"><svg viewBox="0 0 28 10"><line x1="0" y1="5" x2="21" y2="5"/><path d="M17 1l5 4-5 4"/></svg></div>
+      <div class="timeline-step fade-up delay-2">
+        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="1"/><path d="M3 9h18"/></svg>
+        <h4>Producción Web</h4>
+        <p>Squarespace + contenido + WCAG</p>
+      </div>
+      <div class="timeline-connector"><svg viewBox="0 0 28 10"><line x1="0" y1="5" x2="21" y2="5"/><path d="M17 1l5 4-5 4"/></svg></div>
+      <div class="timeline-step fade-up delay-3">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+        <h4>WCAG Testing</h4>
+        <p>Auditoría de accesibilidad</p>
+      </div>
+      <div class="timeline-connector"><svg viewBox="0 0 28 10"><line x1="0" y1="5" x2="21" y2="5"/><path d="M17 1l5 4-5 4"/></svg></div>
+      <div class="timeline-step fade-up delay-4">
+        <svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 6"/></svg>
+        <h4>Lanzamiento</h4>
+        <p>Revisión final + publicación</p>
+      </div>
+    </div>
+
+    <hr class="hr-thin">
+
+    <div class="fade-up">
+      <h4 class="resource-label">Recursos Clave</h4>
+      <div class="resource-tags">
+        <span class="resource-tag">Squarespace</span>
+        <span class="resource-tag">Figma</span>
+        <span class="resource-tag">Adobe Creative Suite</span>
+        <span class="resource-tag">Auditoría WCAG</span>
+      </div>
+    </div>
+
+    <h4 class="resource-label" style="margin-top:48px;">Equipo</h4>
+    <div class="team-carousel-wrap fade-up">
+      <div class="team-carousel">
+        <div class="team-card-c">
+          <div class="team-avatar-c" style="background-image:url('images/team-direccion.jpg');"></div>
+          <div class="team-role-c">Dirección General</div>
+          <div class="team-desc-c">Catalina Arzani — visión estratégica y relación con clientes</div>
+        </div>
+        <div class="team-card-c">
+          <div class="team-avatar-c" style="background-image:url('images/team-uxui.jpg');"></div>
+          <div class="team-role-c">Diseño UX/UI</div>
+          <div class="team-desc-c">Freelance — interfaces y experiencia digital accesible</div>
+        </div>
+        <div class="team-card-c">
+          <div class="team-avatar-c" style="background-image:url('images/team-dev.jpg');"></div>
+          <div class="team-role-c">Desarrollo Web</div>
+          <div class="team-desc-c">Freelance — implementación técnica en Squarespace</div>
+        </div>
+        <div class="team-card-c">
+          <div class="team-avatar-c" style="background-image:url('images/team-wcag.jpg');"></div>
+          <div class="team-role-c">Accesibilidad WCAG</div>
+          <div class="team-desc-c">Freelance (Pack Premium) — auditoría técnica</div>
+        </div>
+        <div class="team-card-c">
+          <div class="team-avatar-c" style="background-image:url('images/team-marketing.jpg');"></div>
+          <div class="team-role-c">Marketing</div>
+          <div class="team-desc-c">Rol interno — Instagram, LinkedIn, newsletter, referidos</div>
+        </div>
+        <div class="team-card-c" aria-hidden="true">
+          <div class="team-avatar-c" style="background-image:url('images/team-direccion.jpg');"></div>
+          <div class="team-role-c">Dirección General</div>
+          <div class="team-desc-c">Catalina Arzani — visión estratégica y relación con clientes</div>
+        </div>
+        <div class="team-card-c" aria-hidden="true">
+          <div class="team-avatar-c" style="background-image:url('images/team-uxui.jpg');"></div>
+          <div class="team-role-c">Diseño UX/UI</div>
+          <div class="team-desc-c">Freelance — interfaces y experiencia digital accesible</div>
+        </div>
+        <div class="team-card-c" aria-hidden="true">
+          <div class="team-avatar-c" style="background-image:url('images/team-dev.jpg');"></div>
+          <div class="team-role-c">Desarrollo Web</div>
+          <div class="team-desc-c">Freelance — implementación técnica en Squarespace</div>
+        </div>
+        <div class="team-card-c" aria-hidden="true">
+          <div class="team-avatar-c" style="background-image:url('images/team-wcag.jpg');"></div>
+          <div class="team-role-c">Accesibilidad WCAG</div>
+          <div class="team-desc-c">Freelance (Pack Premium) — auditoría técnica</div>
+        </div>
+        <div class="team-card-c" aria-hidden="true">
+          <div class="team-avatar-c" style="background-image:url('images/team-marketing.jpg');"></div>
+          <div class="team-role-c">Marketing</div>
+          <div class="team-desc-c">Rol interno — Instagram, LinkedIn, newsletter, referidos</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 08 — ESTRATEGIA DE COMUNICACIÓN ===================== -->
+<section id="comunicacion" class="bg-white">
+  <div class="max-content">
+    <div class="label fade-up">08 — ESTRATEGIA DE COMUNICACIÓN</div>
+    <h2 class="title-xl fade-up">Embudo de Ventas</h2>
+
+    <div class="funnel-shape fade-up">
+      <div class="funnel-stage stage-1" style="--w:100%;">
+        <h4>TOFU — Awareness</h4>
+        <p>Reels institucionales en Instagram y LinkedIn · Posteos educativos sobre accesibilidad</p>
+      </div>
+      <svg class="funnel-arrow" viewBox="0 0 16 10"><path d="M2 2l6 6 6-6"/></svg>
+      <div class="funnel-stage stage-2" style="--w:78%;">
+        <h4>MOFU — Consideración</h4>
+        <p>Casos de éxito before/after · Landing page con CTA a Discovery Session gratuita</p>
+      </div>
+      <svg class="funnel-arrow" viewBox="0 0 16 10"><path d="M2 2l6 6 6-6"/></svg>
+      <div class="funnel-stage stage-3" style="--w:56%;">
+        <h4>BOFU — Decisión</h4>
+        <p>Discovery Session gratuita (venta consultiva) · Referidos activos de clientes satisfechos</p>
+      </div>
+    </div>
+
+    <h3 class="title-lg fade-up">Enfoque Creativo</h3>
+    <div class="approach-blocks">
+      <div class="approach-block fade-up">
+        <h4>Promesa</h4>
+        <p>Presencias digitales que reflejan fielmente la misión y valores de cada organización.</p>
+      </div>
+      <div class="approach-block fade-up delay-1">
+        <h4>Argumento</h4>
+        <p>Integración de estrategia, diseño y accesibilidad en un solo proceso, por alguien que comprende el universo institucional católico.</p>
+      </div>
+      <div class="approach-block fade-up delay-2">
+        <h4>Tono</h4>
+        <p>Cálido, profesional y cercano. No habla de "marketing" sino de misión, comunidad y coherencia institucional.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===================== 09 — ANÁLISIS DE RIESGO ===================== -->
+<section id="riesgo" class="bg-cream">
+  <div class="max-content">
+    <div class="label fade-up">09 — ANÁLISIS DE RIESGO</div>
+    <h2 class="title-xl fade-up">Gestión de Contingencias</h2>
+
+    <div class="risk-layout">
+      <div class="risk-matrix-wrap fade-up">
+        <div class="risk-axis-x">Probabilidad: Baja → Alta</div>
+        <div class="risk-matrix-row">
+          <div class="risk-axis-y">Impacto: Alto → Bajo</div>
+          <div class="risk-quadrants">
+            <div class="risk-cell">
+              <span class="risk-quad-tag">Cuadrante A</span>
+              <p>Revisión periódica</p>
+            </div>
+            <div class="risk-cell major">
+              <span class="risk-quad-tag">Cuadrante B</span>
+              <p>Riesgo mayor</p>
+              <span class="risk-pin">①</span>
+            </div>
+            <div class="risk-cell">
+              <span class="risk-quad-tag">Cuadrante C</span>
+              <p>Riesgo aceptable</p>
+              <span class="risk-pin">②</span>
+            </div>
+            <div class="risk-cell">
+              <span class="risk-quad-tag">Cuadrante D</span>
+              <p>Seguimiento constante</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contingency-stack fade-up delay-1">
+        <div class="contingency-card">
+          <span class="contingency-num">①</span>
+          <div>
+            <h4>Dependencia crítica de la fundadora</h4>
+            <div class="meta">Probabilidad: Media · Impacto: Alto</div>
+            <p><strong>Plan B:</strong> Documentación de procesos · Red de colegas de cobertura · Cláusula de fuerza mayor en contratos · Margen del 20% de capacidad libre</p>
+          </div>
+        </div>
+        <div class="contingency-card">
+          <span class="contingency-num">②</span>
+          <div>
+            <h4>Cambios en la plataforma Squarespace</h4>
+            <div class="meta">Probabilidad: Baja · Impacto: Moderado</div>
+            <p><strong>Plan B:</strong> Conocimiento de plataformas alternativas (WordPress, Webflow) · Contratos sin exclusividad de plataforma</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 10 — MODELO NUMÉRICO ===================== -->
+<section id="numeros" class="bg-white">
+  <div class="max-content">
+    <div class="label fade-up">10 — MODELO NUMÉRICO</div>
+    <h2 class="title-xl fade-up">Proyección Financiera Año 1</h2>
+
+    <figure class="frame frame-table fade-up delay-1">
+      <img class="frame-table-img" src="images/10-proyeccion-financiera.jpg" alt="Proyección financiera año 1">
+    </figure>
+  </div>
+</section>
+
+<!-- ===================== CIERRE ===================== -->
+<section id="cierre" class="bg-cream">
+  <div class="max-content">
+    <div class="closing-statement-block fade-up">
+      <div class="closing-statement-line">
+        <img class="closing-logo" src="images/logo-blest.png" alt="blest">
+        <span class="closing-statement">no compite por volumen.</span>
+      </div>
+      <div class="closing-statement-italic">Compite por comprensión.</div>
+    </div>
+
+    <hr class="closing-sep">
+
+    <div class="closing-bottom">
+      <div class="closing-bottom-left fade-up">blest.agency • Miami, FL</div>
+      <div class="closing-bottom-right fade-up">
+        <div class="thanks">Gracias</div>
+        <div class="questions">¿Preguntas?</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Fade-in on load for cover
+  window.addEventListener('DOMContentLoaded', () => {
+    const coverEls = ['cover-pre','cover-logo','cover-tagline','cover-footer'].map(id => document.getElementById(id));
+    coverEls.forEach((el, i) => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(20px)';
+      el.style.transition = 'opacity 1s ease, transform 1s ease';
+      setTimeout(() => {
+        el.style.opacity = '1';
+        el.style.transform = 'translateY(0)';
+      }, 200 + i * 250);
+    });
+  });
+
+  // IntersectionObserver for fade-up elements
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // ===== Mapa de empatía expandible (04) =====
+  (function setupEmpathy(){
+    const grid = document.getElementById('empathyGrid');
+    if (!grid) return;
+    grid.querySelectorAll('.empathy-cell').forEach(cell => {
+      cell.addEventListener('click', () => cell.classList.toggle('active'));
+    });
+  })();
+
+  // ===== Spotlight comparativo (03) =====
+  (function setupCompareSpotlight(){
+    const table = document.getElementById('compareTable');
+    if (!table) return;
+    table.querySelectorAll('.competitor-col').forEach(th => {
+      th.addEventListener('click', () => {
+        const cls = 'spotlight-' + th.getAttribute('data-col');
+        const wasActive = table.classList.contains(cls);
+        table.classList.remove('spotlight-1','spotlight-2');
+        if (!wasActive) table.classList.add(cls);
+      });
+    });
+  })();
+
+  // ===== Menú hamburguesa (índice desplegable) =====
+  (function setupHamburger(){
+    const toggle = document.getElementById('navToggle');
+    const menu = document.getElementById('navMenu');
+    const overlay = document.getElementById('navOverlay');
+
+    function closeMenu(){
+      toggle.classList.remove('open');
+      menu.classList.remove('open');
+      overlay.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    }
+    function toggleMenu(){
+      const isOpen = menu.classList.toggle('open');
+      toggle.classList.toggle('open', isOpen);
+      overlay.classList.toggle('open', isOpen);
+      toggle.setAttribute('aria-expanded', String(isOpen));
+    }
+
+    toggle.addEventListener('click', toggleMenu);
+    overlay.addEventListener('click', closeMenu);
+    menu.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
+  })();
+
+  // ===== Navegación interactiva para presentación en vivo =====
+  (function setupNav(){
+    const sections = Array.from(document.querySelectorAll('section'));
+    const navLinks = Array.from(document.querySelectorAll('.nav-menu a'));
+    const dotNav = document.getElementById('dotNav');
+
+    sections.forEach(sec => {
+      const btn = document.createElement('button');
+      btn.setAttribute('aria-label', sec.id || 'sección');
+      btn.addEventListener('click', () => sec.scrollIntoView({ behavior: 'smooth' }));
+      dotNav.appendChild(btn);
+    });
+    const dots = Array.from(dotNav.children);
+
+    const spy = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const idx = sections.indexOf(entry.target);
+        dots.forEach(d => d.classList.remove('active'));
+        if (dots[idx]) dots[idx].classList.add('active');
+        navLinks.forEach(a => a.classList.remove('active'));
+        const link = navLinks.find(a => a.getAttribute('href') === '#' + entry.target.id);
+        if (link) link.classList.add('active');
+      });
+    }, { threshold: 0.5 });
+    sections.forEach(sec => spy.observe(sec));
+
+    function currentIndex(){
+      let idx = 0, minDist = Infinity;
+      sections.forEach((sec, i) => {
+        const dist = Math.abs(sec.getBoundingClientRect().top);
+        if (dist < minDist) { minDist = dist; idx = i; }
+      });
+      return idx;
+    }
+
+    function go(dir){
+      const next = Math.min(sections.length - 1, Math.max(0, currentIndex() + dir));
+      sections[next].scrollIntoView({ behavior: 'smooth' });
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (['ArrowDown','ArrowRight','PageDown'].includes(e.key)) {
+        e.preventDefault(); go(1);
+      } else if (['ArrowUp','ArrowLeft','PageUp'].includes(e.key)) {
+        e.preventDefault(); go(-1);
+      }
+    });
+  })();
+
+  // Radar / pentagon chart for Identigrama (06)
+  (function drawRadar(){
+    const svg = document.getElementById('radar-svg');
+    const detailEl = document.getElementById('identigramaDetail');
+    if (!svg || !detailEl) return;
+    const size = 540, center = size/2, maxR = 195;
+    const factors = [
+      { label: 'Innovación / Diferenciación', note: 'Producto poco producido', value: 3,
+        desc: 'Es el factor mejor desarrollado de la agencia: pocas propuestas combinan estrategia, diseño y accesibilidad dentro de un mismo proceso.' },
+      { label: 'Know How / Expertise', note: 'Capacitado', value: 2,
+        desc: 'Equipo capacitado en diseño, desarrollo y accesibilidad, con margen de crecimiento en certificaciones técnicas avanzadas.' },
+      { label: 'Comunicación / Presencia digital', note: 'Media', value: 2,
+        desc: 'Existen canales activos en Instagram y LinkedIn, pero la frecuencia y el volumen de contenido todavía pueden crecer.' },
+      { label: 'Relación con clientes / Red', note: 'Incipiente', value: 2,
+        desc: 'Red de contactos en expansión, apoyada en comunidades de fe y referidos directos de clientes satisfechos.' },
+      { label: 'Presupuesto / Inversión inicial', note: 'Acotada', value: 1,
+        desc: 'Es el factor más débil: la inversión en marketing y herramientas depende del flujo de caja generado en los primeros meses.' }
+    ];
+    const max = 3;
+    const n = factors.length;
+    const angleStep = (Math.PI * 2) / n;
+
+    function pointFor(i, value) {
+      const angle = -Math.PI/2 + i * angleStep;
+      const r = (value / max) * maxR;
+      return [ center + r * Math.cos(angle), center + r * Math.sin(angle) ];
+    }
+
+    let svgContent = '';
+
+    for (let ring = 1; ring <= max; ring++) {
+      let pts = [];
+      for (let i = 0; i < n; i++) pts.push(pointFor(i, ring).join(','));
+      svgContent += `<polygon points="${pts.join(' ')}" fill="none" stroke="rgba(138,138,132,0.3)" stroke-width="1"/>`;
+    }
+
+    for (let i = 0; i < n; i++) {
+      const [x,y] = pointFor(i, max);
+      svgContent += `<line x1="${center}" y1="${center}" x2="${x}" y2="${y}" stroke="rgba(138,138,132,0.3)" stroke-width="1"/>`;
+    }
+
+    let dataPts = [];
+    for (let i = 0; i < n; i++) dataPts.push(pointFor(i, factors[i].value).join(','));
+    svgContent += `<polygon points="${dataPts.join(' ')}" fill="rgba(184,150,90,0.25)" stroke="#B8965A" stroke-width="2"/>`;
+
+    for (let i = 0; i < n; i++) {
+      const [x,y] = pointFor(i, factors[i].value);
+      const [lx,ly] = pointFor(i, max + 0.62);
+      const shortLabel = factors[i].label.split(' / ')[0];
+      svgContent += `
+        <g class="radar-axis" data-index="${i}">
+          <circle cx="${x}" cy="${y}" r="22" fill="transparent"/>
+          <circle class="radar-point" data-index="${i}" cx="${x}" cy="${y}" r="6" fill="#B8965A"/>
+          <text x="${lx}" y="${ly}" text-anchor="middle" dominant-baseline="middle" font-family="Inter, sans-serif" font-weight="600" font-size="16" fill="#1A1A18">${shortLabel}</text>
+          <text x="${lx}" y="${ly + 20}" text-anchor="middle" dominant-baseline="middle" font-family="Inter, sans-serif" font-size="13" fill="#8A8A84">${factors[i].note}</text>
+        </g>`;
+    }
+
+    svg.innerHTML = svgContent;
+
+    function selectFactor(i){
+      const f = factors[i];
+      detailEl.innerHTML = `<span class="identigrama-detail-tag">${f.label} — ${f.value}/3</span><p>${f.desc}</p>`;
+      svg.querySelectorAll('.radar-point').forEach(c => {
+        const active = parseInt(c.getAttribute('data-index')) === i;
+        c.setAttribute('r', active ? 9 : 6);
+        c.setAttribute('fill', active ? '#1A1A18' : '#B8965A');
+      });
+    }
+
+    svg.querySelectorAll('.radar-axis').forEach(g => {
+      g.style.cursor = 'pointer';
+      g.addEventListener('click', () => selectFactor(parseInt(g.getAttribute('data-index'))));
+    });
+
+    selectFactor(0);
+  })();
+</script>
+
+</body>
+</html>
